@@ -1,1 +1,12 @@
-# stack_help_gtk_window
+**How to compile**
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+
+** How to run **
+```
+./StackHelp
+```

@@ -35,7 +35,7 @@ G_DEFINE_TYPE (StackHelpGtkWindow, stack_help_gtk_window, G_TYPE_OBJECT)
 
 /**  Prototypes  **/
 static void stack_help_gtk_window_finalize   (GObject *);
-static void stack_help_gtk_window_on_destroy (StackHelpGtkWindow *);
+static void stack_help_gtk_window_on_destroy (GtkWindow *, gpointer);
 
 /**  Methods  **/
 static void
@@ -50,6 +50,8 @@ stack_help_gtk_window_class_init (StackHelpGtkWindowClass *klass)
                   G_TYPE_FROM_CLASS (gobject_class),
                   G_SIGNAL_RUN_LAST,
                   0, NULL, NULL,
+                  //G_STRUCT_OFFSET (StackHelpGtkWindowClass, destroy_signal),
+                  //NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 }
@@ -57,19 +59,19 @@ stack_help_gtk_window_class_init (StackHelpGtkWindowClass *klass)
 static void
 stack_help_gtk_window_init (StackHelpGtkWindow *stack_help_gtk_window)
 {
-  GObject *window;
+  GtkWidget *window;
   stack_help_gtk_window->builder = 
     gtk_builder_new_from_file(STACK_HELP_GTK_WINDOW_GLADE);
-  window = gtk_builder_get_object(stack_help_gtk_window->builder, "window");
+  window = (GtkWidget *) gtk_builder_get_object(stack_help_gtk_window->builder, "window");
   g_signal_connect(window, "destroy",
                    G_CALLBACK(stack_help_gtk_window_on_destroy),
                    stack_help_gtk_window);
 }
 
 static void
-stack_help_gtk_window_on_destroy (StackHelpGtkWindow *stack_help_gtk_window)
+stack_help_gtk_window_on_destroy (GtkWindow *window, gpointer user_data)
 {
-  g_signal_emit(G_OBJECT(stack_help_gtk_window), 
+  g_signal_emit(G_OBJECT(user_data), 
                 stack_help_gtk_window_signals[DESTROY_SIGNAL], 0);
 }
 

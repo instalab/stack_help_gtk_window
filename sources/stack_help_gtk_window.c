@@ -50,8 +50,6 @@ stack_help_gtk_window_class_init (StackHelpGtkWindowClass *klass)
                   G_TYPE_FROM_CLASS (gobject_class),
                   G_SIGNAL_RUN_LAST,
                   0, NULL, NULL,
-                  //G_STRUCT_OFFSET (StackHelpGtkWindowClass, destroy_signal),
-                  //NULL, NULL,
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 }
